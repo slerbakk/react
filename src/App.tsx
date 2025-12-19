@@ -10,8 +10,14 @@ import CheckoutSuccess from "./pages/CheckoutSuccess";
 import ContactPage from "./pages/ContactPage";
 import ToastContainer from "./components/ToastContainer";
 import { Product, ProductsApiResponse } from "./types";
+import Footer from "./components/Footer";
 
-function App(): JSX.Element {
+/**
+ * Root application component with routing and context providers.
+ * Wraps the app with CartProvider, ToastProvider, and Router.
+ */
+
+function App() {
   const [products, setProducts] = useState<Product[]>([]);
 
   // Fetch products for search functionality
@@ -35,7 +41,7 @@ function App(): JSX.Element {
     <ToastProvider>
       <CartProvider>
         <Router>
-          <div className="min-h-screen bg-gray-50">
+          <div className="flex flex-col min-h-screen bg-gray-50">
             <Header products={products} />
             <Routes>
               <Route path="/" element={<HomePage />} />
@@ -44,6 +50,7 @@ function App(): JSX.Element {
               <Route path="/checkout/success" element={<CheckoutSuccess />} />
               <Route path="/contact" element={<ContactPage />} />
             </Routes>
+            <Footer />
             <ToastContainer />
           </div>
         </Router>

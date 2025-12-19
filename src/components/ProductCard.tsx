@@ -3,9 +3,20 @@ import { useCart } from "../context/CartContext";
 import { useToast } from "../context/ToastContext";
 import { ProductCardProps } from "../types";
 
-function ProductCard({ product }: ProductCardProps): JSX.Element {
+/**
+ * Displays a product card with image, title, rating, price, and add to cart button.
+ * Clicking the card navigates to the product detail page.
+ * @param {ProductCardProps} props - Component props containing product data
+ */
+
+function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart();
   const { showSuccess } = useToast();
+
+  /**
+   * Adds product to cart and prevents navigation when clicking the button.
+   * @param {React.MouseEvent<HTMLButtonElement>} e - Click event
+   */
 
   const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault(); // Prevent navigation when clicking the button
@@ -32,6 +43,7 @@ function ProductCard({ product }: ProductCardProps): JSX.Element {
               : product.image?.alt || product.title
           }
           className="object-cover w-full h-48"
+          loading="lazy"
         />
         {/* Discount Badge */}
         {product.discountedPrice && (

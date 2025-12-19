@@ -2,7 +2,13 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { SearchBarProps, Product } from "../types";
 
-function SearchBar({ products }: SearchBarProps): JSX.Element {
+/**
+ * Search bar with live results, dropdown, and keyboard navigation.
+ * Supports arrow keys, enter, and escape for navigation.
+ * @param {SearchBarProps} props - Component props containing products array
+ */
+
+function SearchBar({ products }: SearchBarProps) {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [searchResults, setSearchResults] = useState<Product[]>([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
@@ -36,7 +42,12 @@ function SearchBar({ products }: SearchBarProps): JSX.Element {
     setHighlightedIndex(-1);
   }, [searchTerm, products]);
 
-  // Handle keyboard navigation
+  /**
+   * Handles keyboard navigation in search results.
+   * ArrowDown/Up: Navigate results, Enter: Select, Escape: Close
+   * @param {React.KeyboardEvent<HTMLInputElement>} e - Keyboard event
+   */
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (!isDropdownOpen) return;
 

@@ -5,7 +5,10 @@ import { CartItem, CartState, Product } from "../types";
 type CartAction =
   | { type: "ADD_ITEM"; payload: { product: Product } }
   | { type: "REMOVE_ITEM"; payload: { productId: string } }
-  | { type: "UPDATE_QUANTITY"; payload: { productId: string; quantity: number } }
+  | {
+      type: "UPDATE_QUANTITY";
+      payload: { productId: string; quantity: number };
+    }
   | { type: "CLEAR_CART" };
 
 // Cart context type
@@ -103,17 +106,37 @@ interface CartProviderProps {
   children: ReactNode;
 }
 
+/**
+ * Provides shopping cart state and functions to all child components.
+ * Manages cart items, quantities, and total calculations.
+ * @param {CartProviderProps} props - Provider props containing children
+ */
+
 export function CartProvider({ children }: CartProviderProps) {
   const [state, dispatch] = useReducer(cartReducer, initialState);
 
-  // Helper functions to interact with the cart
+  /**
+   * Adds a product to cart or increments quantity if already exists.
+   * @param {Product} product - Product to add to cart
+   */
   const addToCart = (product: Product) => {
     dispatch({ type: CART_ACTIONS.ADD_ITEM, payload: { product } });
   };
 
+  /**
+   * Removes a product completely from the cart.
+   * @param {string} productId - ID of product to remove
+   */
+
   const removeFromCart = (productId: string) => {
     dispatch({ type: CART_ACTIONS.REMOVE_ITEM, payload: { productId } });
   };
+
+  /**
+   * Updates the quantity of a cart item.
+   * @param {string} productId - ID of product to update
+   * @param {number} quantity - New quantity (minimum 1)
+   */
 
   const updateQuantity = (productId: string, quantity: number) => {
     dispatch({
@@ -126,12 +149,18 @@ export function CartProvider({ children }: CartProviderProps) {
     dispatch({ type: CART_ACTIONS.CLEAR_CART });
   };
 
-  // Calculate total items in cart
+  /**
+   * Calculates total number of items in cart.
+   * @returns {number} Total quantity of all items
+   */
   const getTotalItems = (): number => {
     return state.items.reduce((total, item) => total + item.quantity, 0);
   };
 
-  // Calculate total price
+  /**
+   * Calculates total price of all cart items including discounts.
+   * @returns {number} Total price
+   */
   const getTotalPrice = (): number => {
     return state.items.reduce((total, item) => {
       const price = item.discountedPrice || item.price;

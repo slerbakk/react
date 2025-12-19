@@ -3,13 +3,23 @@ import { useCart } from "../context/CartContext";
 import { useToast } from "../context/ToastContext";
 import { CartItem } from "../types";
 
+/**
+ * Shopping cart page displaying cart items, quantities, and checkout.
+ * Allows updating quantities, removing items, and proceeding to checkout.
+ */
+
 function CartPage() {
   const navigate = useNavigate();
   const { items, removeFromCart, updateQuantity, clearCart, getTotalPrice } =
     useCart();
   const { showSuccess, showInfo } = useToast();
 
-  // Handle quantity change
+  /**
+   * Updates item quantity or removes item if quantity becomes 0.
+   * @param {string} productId - ID of the product to update
+   * @param {number} newQuantity - New quantity value
+   */
+
   const handleQuantityChange = (productId, newQuantity) => {
     if (newQuantity < 1) {
       const item = items.find((item) => item.id === productId);

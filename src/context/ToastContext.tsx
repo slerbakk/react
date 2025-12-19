@@ -27,11 +27,21 @@ interface ToastProviderProps {
   children: ReactNode;
 }
 
+/**
+ * Provides toast notification system to all child components.
+ * Supports success, error, info, and warning toast types with auto-dismiss.
+ * @param {ToastProviderProps} props - Provider props containing children
+ */
+
 export function ToastProvider({ children }: ToastProviderProps) {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
   // Add a new toast
-  const addToast = (message: string, type: ToastType = TOAST_TYPES.INFO, duration: number = 3000) => {
+  const addToast = (
+    message: string,
+    type: ToastType = TOAST_TYPES.INFO,
+    duration: number = 3000
+  ) => {
     const id = Date.now() + Math.random(); // Simple unique ID
     const newToast = {
       id,
@@ -62,9 +72,18 @@ export function ToastProvider({ children }: ToastProviderProps) {
     setToasts([]);
   };
 
-  // Shorthand methods for different toast types
+  /**
+   * Displays a success toast notification.
+   * @param {string} message - Success message to display
+   */
   const showSuccess = (message: string, duration?: number) =>
     addToast(message, TOAST_TYPES.SUCCESS, duration);
+
+  /**
+   * Displays an error toast notification.
+   * @param {string} message - Error message to display
+   */
+
   const showError = (message: string, duration?: number) =>
     addToast(message, TOAST_TYPES.ERROR, duration);
   const showInfo = (message: string, duration?: number) =>

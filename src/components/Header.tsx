@@ -3,7 +3,13 @@ import { useCart } from "../context/CartContext";
 import SearchBar from "./SearchBar";
 import { HeaderProps } from "../types";
 
-function Header({ products = [] }: HeaderProps): JSX.Element {
+/**
+ * Main navigation header with logo, search bar, and cart.
+ * Displays cart item count and responsive navigation links.
+ * @param {HeaderProps} props - Component props
+ */
+
+function Header({ products = [] }: HeaderProps) {
   const { getTotalItems } = useCart();
 
   return (

@@ -2,6 +2,11 @@ import { useState } from "react";
 import { useToast } from "../context/ToastContext";
 import { ContactFormData, FormErrors } from "../types";
 
+/**
+ * Contact form page with validation and submission handling.
+ * Validates name (min 3 chars), email, subject (min 3 chars), and message (min 10 chars).
+ */
+
 function ContactPage() {
   const { showSuccess, showError } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -34,7 +39,11 @@ function ContactPage() {
     }
   };
 
-  // Validation functions
+  /**
+   * Validates all form fields and returns validation status.
+   * @returns {boolean} True if form is valid, false otherwise
+   */
+
   const validateForm = () => {
     const newErrors = {};
 

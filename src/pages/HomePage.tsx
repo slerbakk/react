@@ -3,15 +3,20 @@ import ProductCard from "../components/ProductCard";
 import SortFilter from "../components/SortFilter";
 import { Product } from "../types";
 
+/**
+ * Home page displaying all products with sorting and filtering options.
+ * Fetches products from API and handles loading/error states.
+ */
+
 function HomePage() {
   // State to store our products from the API
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [sortOption, setSortOption] = useState<string>("default");
-  const [filteredAndSortedProducts, setFilteredAndSortedProducts] = useState<Product[]>(
-    []
-  );
+  const [filteredAndSortedProducts, setFilteredAndSortedProducts] = useState<
+    Product[]
+  >([]);
 
   // Fetch products from the API when component mounts
   useEffect(() => {
@@ -72,8 +77,12 @@ function HomePage() {
     setFilteredAndSortedProducts(sortedProducts);
   }, [products, sortOption]);
 
-  // Handle sort change
-  const handleSortChange = (newSortOption) => {
+  /**
+   * Updates the sort option for products.
+   * @param {string} newSortOption - Sort option (e.g., "price-low-high", "name-a-z")
+   */
+
+  const handleSortChange = (newSortOption: string) => {
     setSortOption(newSortOption);
   };
 

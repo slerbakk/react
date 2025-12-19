@@ -4,6 +4,11 @@ import { Product } from "../types";
 import { useCart } from "../context/CartContext";
 import { useToast } from "../context/ToastContext";
 
+/**
+ * Product detail page showing full product information, reviews, and tags.
+ * Fetches product data from API based on URL parameter.
+ */
+
 function ProductDetail() {
   const { id } = useParams<{ id: string }>(); // Get product ID from URL
   const { addToCart } = useCart();
@@ -11,6 +16,10 @@ function ProductDetail() {
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  /**
+   * Adds the current product to shopping cart.
+   */
 
   const handleAddToCart = () => {
     addToCart(product);
